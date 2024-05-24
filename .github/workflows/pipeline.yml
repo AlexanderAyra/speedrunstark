@@ -17,13 +17,20 @@ jobs:
         with:
           token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
 
+      - name: Primer ls
+        run: ls
+      - name: Segundo ls -l
+        run: ls -l
+      - name: Tercer ls -a
+        run: ls -a
+
       - name: Build and push Docker Images
         uses: docker/build-push-action@v5
         with:
           context: .
           file: ./Dockerfile
           push: true
-          tag: ${{ secrets.DOCKERHUN_USERNAME }}/clockbox:latest
+          tag: ${{ secrets.DOCKERHUB_USERNAME }}/clockbox:latest
 
       - name: Build container image
         run: docker build -t registry.digitalocean.com/alexander-registry/${GITHUB_REPOSITORY}:$(echo $GITHUB_SHA | head -c7) .
