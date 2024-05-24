@@ -6,16 +6,38 @@ on:
       - main
 
 jobs:
-  deploy:
+  build:
     runs-on: ubuntu-20.04
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout files
+        uses: actions/checkout@v4
+
+      - name: Install doctl
+        uses: digitalocean/action-doctl@v2
         with:
-          fetch-depth: 0
-      - uses: actions/setup-node@v4
+          token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
+
+      - name: Build and push Docker Images
+        uses: docker/build-push-action@v5
         with:
-          node-version: 18
-      - name: Install Dependencies
-        run: yarn install
-      - name: Ver si todo esta bien
-        run: echo "Todo bien Alexander"
+          context: .
+          file: ./Dockerfile
+          push: true
+          tag: ${{ secrets.DOCKERHUN_USERNAME }}/clockbox:latest
+
+      - name: Build container image
+        run: docker build -t registry.digitalocean.com/alexander-registry/${GITHUB_REPOSITORY}:$(echo $GITHUB_SHA | head -c7) .
+# jobs:
+#   deploy:
+#     runs-on: ubuntu-20.04
+#     steps:
+#       - uses: actions/checkout@v4
+#         with:
+#           fetch-depth: 0
+#       - uses: actions/setup-node@v4
+#         with:
+#           node-version: 18
+#       - name: Install Dependencies
+#         run: yarn install
+#       - name: probando el Chain
+#         run: yarn chain

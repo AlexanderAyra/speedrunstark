@@ -3,12 +3,11 @@ name: Build and Deploy to Droplet
 on:
   push:
     branches:
-      - main 
+      - main
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
-
     steps:
       - name: Build and deploy app on server
         uses: appleboy/ssh-action@master
