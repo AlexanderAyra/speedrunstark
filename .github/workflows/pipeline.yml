@@ -17,14 +17,14 @@ jobs:
         with:
           token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
 
-      - name: Primer ls
-        run: ls
-      - name: Segundo ls -l
-        run: ls -l
-      - name: Tercer ls -a
-        run: ls -a
-      - name: LS al .YARN
-        run: ls .yarn
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
 
       - name: Build and push Docker Images
         uses: docker/build-push-action@v5
