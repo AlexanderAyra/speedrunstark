@@ -27,7 +27,7 @@ jobs:
         uses: docker/setup-buildx-action@v3
 
       - name: Build container image
-        run: docker build -t registry.digitalocean.com/alexander-registry/${GITHUB_REPOSITORY}:$(echo $GITHUB_SHA | head -c7) .
+        run: docker build -t registry.digitalocean.com/alexander-registry/speedrunstark:$(echo $GITHUB_SHA | head -c7) .
 # jobs:
 #   deploy:
 #     runs-on: ubuntu-20.04
