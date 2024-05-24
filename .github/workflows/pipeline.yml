@@ -26,14 +26,6 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
-      - name: Build and push Docker Images
-        uses: docker/build-push-action@v5
-        with:
-          context: .
-          file: ./Dockerfile
-          push: true
-          tag: ${{ secrets.DOCKERHUB_USERNAME }}/clockbox:latest
-
       - name: Build container image
         run: docker build -t registry.digitalocean.com/alexander-registry/${GITHUB_REPOSITORY}:$(echo $GITHUB_SHA | head -c7) .
 # jobs:
