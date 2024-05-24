@@ -34,17 +34,22 @@ jobs:
 
       - name: Push image to DigitalOcean Container Registry
         run: docker push registry.digitalocean.com/alexander-registry/speedrunstark:$(echo $GITHUB_SHA | head -c7)
-# jobs:
-#   deploy:
-#     runs-on: ubuntu-20.04
-#     steps:
-#       - uses: actions/checkout@v4
-#         with:
-#           fetch-depth: 0
-#       - uses: actions/setup-node@v4
-#         with:
-#           node-version: 18
-#       - name: Install Dependencies
-#         run: yarn install
-#       - name: probando el Chain
-#         run: yarn chain
+
+      - name: Conect a droplet
+        run: echo  ssh root@${{ secrets.IP_DROPLET }}
+
+      - name: Ls -a del Droplet
+        run: ls -a
+  # deploy:
+  #   runs-on: ubuntu-20.04
+  #   steps:
+  #     - uses: actions/checkout@v4
+  #       with:
+  #         fetch-depth: 0
+  #     - uses: actions/setup-node@v4
+  #       with:
+  #         node-version: 18
+  #     - name: Install Dependencies
+  #       run: yarn install
+  #     - name: probando el Chain
+  #       run: yarn chain
