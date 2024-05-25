@@ -36,7 +36,7 @@ jobs:
         run: docker push registry.digitalocean.com/alexander-registry/speedrunstark:$(echo $GITHUB_SHA | head -c7)
 
       - name: Conect a droplet
-        run: echo  ssh root@${{ secrets.IP_DROPLET }}
+        run: ssh root@${{ secrets.IP_DROPLET }}
 
       - name: Install doctl
         run: |
