@@ -38,8 +38,22 @@ jobs:
       - name: Conect a droplet
         run: echo  ssh root@${{ secrets.IP_DROPLET }}
 
-      - name: Ls -a del Droplet
-        run: ls -a
+      - name: Install doctl
+        run: |
+          wget https://github.com/digitalocean/doctl/releases/download/v1.104.0/doctl-1.104.0-linux-amd64.tar.gz
+          tar xf doctl-1.104.0-linux-amd64.tar.gz
+          sudo mv ~/doctl /usr/local/bin
+
+      - name: Login DigitalOcean
+        run: |
+          doctl auth init --access-token ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
+          doctl registry login --never-expire
+
+      # - name: DOCTL registry never-expire
+      #   run: doctl registry login --never-expire
+
+      - name: Docker pull
+        run: docker pull registry.digitalocean.com/alexander-registry/speedrunstark:$(echo $GITHUB_SHA | head -c7)
   # deploy:
   #   runs-on: ubuntu-20.04
   #   steps:
